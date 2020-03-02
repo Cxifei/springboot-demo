@@ -1,0 +1,31 @@
+# 开发环境
+# 服务端口
+server:
+  port: 8080
+spring:
+  # 数据源
+  datasource:
+    driver-class-name: org.h2.Driver
+#    这个数据库只能在Java中使用，适用于项目展示、测试数据等等
+#    url有以下几种形式
+#    jdbc:h2:C:/User/admin/Desktop/database 会持久化到本地磁盘中（Windows的home目录中，相当于Linux的jdbc:h2:~/test）
+#    jdbc:h2:tcp://IP/database 通过远程连接
+#    jdbc:h2:mem:database 直接在内存中
+    url: jdbc:h2:mem:test
+#    账号和密码可以任意指定
+    username: root
+    password: 123
+    data: classpath:db/data.sql # 程序初始化时执行的 DML语句
+    schema:  # 程序初始化时执行的 DDL语句
+  h2:
+    console:
+      path: "/h2-console" # 控制台地址
+      enabled: true # 是否显示控制台
+      settings:
+        web-allow-others: true # 是否允许远程访问，false则只能在本机上访问
+  jpa:
+    show-sql: true # 日志中显示SQL语句
+    hibernate:
+      ddl-auto: update # 自动更新
+  thymeleaf:
+    cache: false # thymeleaf页面不使用缓存

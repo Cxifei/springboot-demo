@@ -1,0 +1,44 @@
+# 服务端口
+#server:
+#  port: 8081
+spring:
+  application:
+    name: springboot-demo  # 项目名称
+  # spring多环境 pro test
+  profiles:
+    active: dev
+
+  # 数据源
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/excel?serverTimezone=Asia/Shanghai&useUnicode=true&useSSL=false&characterEncoding=UTF-8
+#    username: root
+#    password: root123
+
+# mybatis配置
+mybatis:
+  type-aliases-package: com.cxf.springbootdemo.pojo # 别名配置
+  mapper-locations: classpath:mapper/*Mapper.xml # xml映射文件配置
+
+# 日志配置
+logging:
+  level:
+    com.cxf.springbootdemo.mapper: trace
+
+# actuator info 自定义信息
+# 通过 localhost:8080/actuator/info 访问
+info:
+  app:
+    name: springboot项目
+    version: 0.0.1
+
+# 配置访问所有地址，官网上面的所有端口地址
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"  # 打开所有端口
+
+  endpoint:
+    health:
+      show-details: always  # 总是显示监控的详细信息

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>用户信息列表</title>
+</head>
+<body>
+    <a th:href="@{'/user/add'}">添加</a>
+    <table>
+        <thead>
+            <th>
+                <td>ID</td>
+                <td>姓名</td>
+                <td>性别</td>
+            </th>
+        </thead>
+        <tbody>
+            <tr th:each="user:${users.getContent()}">
+                <td th:text="${user.id}">1</td>
+                <td th:text="${user.name}">小公举</td>
+                <td th:text="${user.sex}">男</td>
+                <td>
+                    <a th:href="@{'/user/edit?id='+${user.id}}">修改</a>
+                    <a th:href="@{'/user/del/'+${user.id}}">删除</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div>
+        <a th:if="!${users.isFirst()}"
+           th:href="@{/user/listPage(page=0,size=${users.size})}">首页</a>
+        <a th:if="${users.hasPrevious()}"
+           th:href="@{/user/listPage(page=${users.previousPageable().getPageNumber()},size=${users.size})}">上一页</a>
+<!--        遍历总页数的数字-->
+        <a th:each="num:${#numbers.sequence(1,users.totalPages)}"
+           th:href="@{/user/listPage(page=${num}-1,size=${users.size})}"
+           th:text="${num}"
+           th:style="${'margin: 0 5px;'+((num == (users.number + 1))?'color:red;':'color:blue;')}">1</a>
+        <a th:if="${users.hasNext()}"
+           th:href="@{/user/listPage(page=${users.nextPageable().getPageNumber()},size=${users.size})}">下一页</a>
+        <a th:if="!${users.isLast()}"
+           th:href="@{/user/listPage(page=${users.totalPages}-1,size=${users.size})}">尾页</a>
+        一共有<span th:text="${users.totalElements}">0</span>条
+    </div>
+</body>
+</html>
